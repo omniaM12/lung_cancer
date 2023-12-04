@@ -7,7 +7,7 @@ from PIL import Image
 bag_clf = joblib.load('bag_clf')
 processor=joblib.load("processor")
 
-lung= pd.read_csv("D:/lung_cancer.csv")
+lung= pd.read_csv("lung_cancer.csv")
 lung.columns=lung.columns.str.lower()
 lung=pd.get_dummies(lung, columns=["lung_cancer"], drop_first=True) 
 lung.columns=lung.columns.str.replace("lung_cancer_YES", "cancer_risk")
