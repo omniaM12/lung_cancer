@@ -24,44 +24,49 @@ st.image(icon, use_column_width= True)
 
 gender=st.sidebar.selectbox('gender',lung["gender"].unique())
 age= st.slider("age",lung["age"].min(), lung["age"].max())
-smoking= st.sidebar.selectbox("smoking",lung["smoking"].unique())
-yellow_fingers= st.sidebar.selectbox("yellow_fingers",lung["yellow_fingers"].unique())
-anxiety= st.sidebar.selectbox('anxiety', lung["anxiety"].unique())
-peer_pressure= st.sidebar.selectbox('peer_pressure',lung["peer_pressure"].unique())
-chronic_disease= st.sidebar.selectbox('chronic_disease',lung["chronic_disease"].unique())
-fatigue_= st.sidebar.selectbox('fatigue_',lung["fatigue_"].unique())
-allergy_= st.sidebar.selectbox('allergy_', lung["allergy_"].unique())
-wheezing= st.sidebar.selectbox('wheezing',lung["wheezing"].unique())
-alcohol_consuming= st.sidebar.selectbox('alcohol_consuming',lung["alcohol_consuming"].unique())
-coughing= st.sidebar.selectbox('coughing',lung["coughing"].unique())
-shortness_of_breath= st.sidebar.selectbox('shortness_of_breath',lung["shortness_of_breath"].unique())
-swallowing_difficulty= st.sidebar.selectbox('swallowing_difficulty',lung["swallowing_difficulty"].unique())
-chest_pain= st.sidebar.selectbox('chest_pain',lung["chest_pain"].unique())
+smoking= st.sidebar.selectbox("smoking", ('Yes', 'No'))
+yellow_fingers= st.sidebar.selectbox("yellow_fingers",('Yes', 'No'))
+anxiety= st.sidebar.selectbox('anxiety', ('Yes', 'No'))
+peer_pressure= st.sidebar.selectbox('peer_pressure',('Yes', 'No'))
+chronic_disease= st.sidebar.selectbox('chronic_disease',('Yes', 'No'))
+fatigue_= st.sidebar.selectbox('fatigue_',('Yes', 'No'))
+allergy_= st.sidebar.selectbox('allergy_', ('Yes', 'No'))
+wheezing= st.sidebar.selectbox('wheezing',('Yes', 'No'))
+alcohol_consuming= st.sidebar.selectbox('alcohol_consuming',('Yes', 'No'))
+coughing= st.sidebar.selectbox('coughing',('Yes', 'No'))
+shortness_of_breath= st.sidebar.selectbox('shortness_of_breath',('Yes', 'No'))
+swallowing_difficulty= st.sidebar.selectbox('swallowing_difficulty',('Yes', 'No'))
+chest_pain= st.sidebar.selectbox('chest_pain',('Yes', 'No'))
 
+def convert_response(response):
+ if response == 'Yes':
+  return 2
+ else:
+  return 1
 #dict
 user_data={
     "gender":gender, 
     "age":age,
-    "smoking": smoking,
-    "yellow_fingers": yellow_fingers,
-    "anxiety":anxiety,
-    "peer_pressure":peer_pressure,
-    "chronic_disease": chronic_disease,
-    "fatigue_": fatigue_,
-    "allergy_": allergy_,
-    "wheezing": wheezing,
-    "alcohol_consuming":alcohol_consuming,
-    "coughing": coughing,
-    "shortness_of_breath": shortness_of_breath,
-    "swallowing_difficulty": swallowing_difficulty,
-    "chest_pain": chest_pain
+    "smoking": convert_response(smoking),
+    "yellow_fingers": convert_response(yellow_fingers),
+    "anxiety":convert_response(anxiety),
+    "peer_pressure":convert_response(peer_pressure),
+    "chronic_disease": convert_response(chronic_disease),
+    "fatigue_": convert_response(fatigue_),
+    "allergy_": convert_response(allergy_),
+    "wheezing": convert_response(wheezing),
+    "alcohol_consuming":convert_response(alcohol_consuming),
+    "coughing": convert_response(coughing),
+    "shortness_of_breath": convert_response(shortness_of_breath),
+    "swallowing_difficulty": convert_response(swallowing_difficulty),
+    "chest_pain": convert_response(chest_pain)
 }
         
          
 lung_parm=pd.DataFrame(user_data, index=[0]) 
 lung_parm_ready=processor.transform(lung_parm)
-st.button("Probability: Neg-Pos")
-lung_pred= bag_clf.predict_proba(lung_parm_ready)*100
+lung_pred= bag_clf.predict_proba(lung_parm_ready)[1]*100
 
 #display
-st.markdown("""# {}""".format(lung_pred))         
+if st.button("Probability: Neg-Pos")
+ st.markdown("""# {}""".format(lung_pred))         
