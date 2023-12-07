@@ -1,4 +1,4 @@
-import streamlit as st
+,import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
@@ -65,8 +65,8 @@ user_data={
          
 lung_parm=pd.DataFrame(user_data, index=[0]) 
 lung_parm_ready=processor.transform(lung_parm)
-lung_pred= bag_clf.predict_proba(lung_parm_ready)[0]*100
+lung_pred= bag_clf.predict_proba(lung_parm_ready)[0][1]*100
 
 #display
-if st.button("Probability: Neg-Pos"):
- st.markdown("""# {}""".format(lung_pred))         
+if st.button("Probability of Positive: "):
+ st.markdown("""# {} %""".format(lung_pred))         
