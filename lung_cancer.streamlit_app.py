@@ -68,5 +68,5 @@ lung_parm_ready=processor.transform(lung_parm)
 lung_pred= bag_clf.predict_proba(lung_parm_ready)[1]*100
 
 #display
-if st.button("Probability: Neg-Pos")
+if st.button("Probability: Neg-Pos"):
  st.markdown("""# {}""".format(lung_pred))         
