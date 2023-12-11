@@ -13,9 +13,9 @@ lung=pd.get_dummies(lung, columns=["lung_cancer"], drop_first=True)
 lung.columns=lung.columns.str.replace("lung_cancer_YES", "cancer_risk")
 lung.columns=lung.columns.str.replace(" ", "_")
  
-st.title("Prediction of lung cancer occurrance")
+st.title("Prediction of lung cancer occurrence")
 st.caption("About the app")
-st.write("""Simple approach of lung cancer risk occurance probability according to some early reported signs""")
+st.write("""Simple approach of prediction of lung cancer risk occurrence according to some early reported signs""")
 st.write("""Options:1=no, 2= yes""")
 
 # app icon
@@ -24,44 +24,48 @@ st.image(icon, use_column_width= True)
 
 gender=st.sidebar.selectbox('gender',lung["gender"].unique())
 age= st.slider("age",lung["age"].min(), lung["age"].max())
-smoking= st.sidebar.selectbox("smoking",lung["smoking"].unique())
-yellow_fingers= st.sidebar.selectbox("yellow_fingers",lung["yellow_fingers"].unique())
-anxiety= st.sidebar.selectbox('anxiety', lung["anxiety"].unique())
-peer_pressure= st.sidebar.selectbox('peer_pressure',lung["peer_pressure"].unique())
-chronic_disease= st.sidebar.selectbox('chronic_disease',lung["chronic_disease"].unique())
-fatigue_= st.sidebar.selectbox('fatigue_',lung["fatigue_"].unique())
-allergy_= st.sidebar.selectbox('allergy_', lung["allergy_"].unique())
-wheezing= st.sidebar.selectbox('wheezing',lung["wheezing"].unique())
-alcohol_consuming= st.sidebar.selectbox('alcohol_consuming',lung["alcohol_consuming"].unique())
-coughing= st.sidebar.selectbox('coughing',lung["coughing"].unique())
-shortness_of_breath= st.sidebar.selectbox('shortness_of_breath',lung["shortness_of_breath"].unique())
-swallowing_difficulty= st.sidebar.selectbox('swallowing_difficulty',lung["swallowing_difficulty"].unique())
-chest_pain= st.sidebar.selectbox('chest_pain',lung["chest_pain"].unique())
-
+smoking= st.sidebar.selectbox("smoking",("Yes","NO"))
+yellow_fingers= st.sidebar.selectbox("yellow_fingers",("Yes","NO"))
+anxiety= st.sidebar.selectbox('anxiety', ("Yes","NO"))
+peer_pressure= st.sidebar.selectbox('peer_pressure',("Yes","NO"))
+chronic_disease= st.sidebar.selectbox('chronic_disease',("Yes","NO"))
+fatigue_= st.sidebar.selectbox('fatigue_',("Yes","NO"))
+allergy_= st.sidebar.selectbox('allergy_', ("Yes","NO"))
+wheezing= st.sidebar.selectbox('wheezing',("Yes","NO"))
+alcohol_consuming= st.sidebar.selectbox('alcohol_consuming',("Yes","NO"))
+coughing= st.sidebar.selectbox('coughing',("Yes","NO"))
+shortness_of_breath= st.sidebar.selectbox('shortness_of_breath',("Yes","NO"))
+swallowing_difficulty= st.sidebar.selectbox('swallowing_difficulty',("Yes","NO"))
+chest_pain= st.sidebar.selectbox('chest_pain',lung["chest_pain"].("Yes","NO"))
+def cat_resp (response):
+ if response=="Yes":
+  return 2
+ else:
+  return 1
 #dict
 user_data={
-    "gender":gender, 
-    "age":age,
-    "smoking": smoking,
-    "yellow_fingers": yellow_fingers,
-    "anxiety":anxiety,
-    "peer_pressure":peer_pressure,
-    "chronic_disease": chronic_disease,
-    "fatigue_": fatigue_,
-    "allergy_": allergy_,
-    "wheezing": wheezing,
-    "alcohol_consuming":alcohol_consuming,
-    "coughing": coughing,
-    "shortness_of_breath": shortness_of_breath,
-    "swallowing_difficulty": swallowing_difficulty,
-    "chest_pain": chest_pain
+    "gender":cat_resp(gender), 
+    "age":cat_resp(age),
+    "smoking":cat_resp(smoking),
+    "yellow_fingers":cat_resp(yellow_fingers),
+    "anxiety":cat_resp(anxiety),
+    "peer_pressure":cat_resp(peer_pressure),
+    "chronic_disease": cat_resp(chronic_disease),
+    "fatigue_":cat_resp(fatigue_),
+    "allergy_": cat_resp(allergy_),
+    "wheezing": cat_resp(wheezing),
+    "alcohol_consuming":cat_resp(alcohol_consuming),
+    "coughing": cat_resp(coughing),
+    "shortness_of_breath": cat_resp(shortness_of_breath),
+    "swallowing_difficulty": cat_resp(swallowing_difficulty),
+    "chest_pain": cat_resp(chest_pain)
 }
         
          
 lung_parm=pd.DataFrame(user_data, index=[0]) 
 lung_parm_ready=processor.transform(lung_parm)
-st.button("Probability: Neg-Pos")
-lung_pred= bag_clf.predict_proba(lung_parm_ready)*100
+lung_pred= bag_clf.predict_proba(lung_parm_ready)[0][1]*100
 
 #display
-st.markdown("""# {}""".format(lung_pred))         
+if st.button("Probability of occurrence:":
+st.markdown("""# {} %""".format(lung_pred))         
