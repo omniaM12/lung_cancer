@@ -16,7 +16,7 @@ lung.columns=lung.columns.str.replace(" ", "_")
 st.title("Prediction of lung cancer occurrence")
 st.caption("About the app")
 st.write("""Simple approach of prediction of lung cancer risk occurrence according to some early reported signs""")
-st.write("""Options:1=no, 2= yes""")
+ 
 
 # app icon
 icon = Image.open('l.cancer.jpg')
