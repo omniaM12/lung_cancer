@@ -67,5 +67,5 @@ lung_parm_ready=processor.transform(lung_parm)
 lung_pred= bag_clf.predict_proba(lung_parm_ready)[0][1]*100
 
 #display
-if st.button("Probability of occurrence:":
+if st.button("Probability of occurrence:"):
 st.markdown("""# {} %""".format(lung_pred))         
