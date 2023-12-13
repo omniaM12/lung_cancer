@@ -36,7 +36,7 @@ alcohol_consuming= st.sidebar.selectbox('alcohol_consuming',("Yes","NO"))
 coughing= st.sidebar.selectbox('coughing',("Yes","NO"))
 shortness_of_breath= st.sidebar.selectbox('shortness_of_breath',("Yes","NO"))
 swallowing_difficulty= st.sidebar.selectbox('swallowing_difficulty',("Yes","NO"))
-chest_pain= st.sidebar.selectbox('chest_pain',lung["chest_pain"].("Yes","NO"))
+chest_pain= st.sidebar.selectbox('chest_pain',lung["chest_pain"],("Yes","NO"))
 def cat_resp (response):
  if response=="Yes":
   return 2
