@@ -37,6 +37,7 @@ coughing= st.sidebar.selectbox('coughing',("Yes","NO"))
 shortness_of_breath= st.sidebar.selectbox('shortness_of_breath',("Yes","NO"))
 swallowing_difficulty= st.sidebar.selectbox('swallowing_difficulty',("Yes","NO"))
 chest_pain= st.sidebar.selectbox('chest_pain',("Yes","NO"))
+
 def cat_resp (response):
  if response=="Yes":
   return 2
@@ -44,8 +45,8 @@ def cat_resp (response):
   return 1
 #dict
 user_data={
-    "gender":cat_resp(gender), 
-    "age":cat_resp(age),
+    "gender":(gender), 
+    "age":(age),
     "smoking":cat_resp(smoking),
     "yellow_fingers":cat_resp(yellow_fingers),
     "anxiety":cat_resp(anxiety),
